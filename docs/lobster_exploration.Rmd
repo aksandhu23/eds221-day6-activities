@@ -42,6 +42,52 @@ lobster_count <- lobster_subset|>
   group_by(site, legal) |>
   summarize(count = n())
 
-ggplot(data = lobster_count, aes(x = legal, y = count)) + geom_col() 
+ggplot(data = lobster_count, aes(x = site, y = count)) + geom_col(position = "fill", 
+        aes(fill = legal)) 
+```
+
+## Task 3
+
+```{r}
+ex_a <- lobsters |> 
+  filter(site == "IVEE" | site == "CARP" | site == "NAPL")
+
+# or ex_a <- lobsters |> filter(site == c("IVEE", "CARP", "NAPL")
+
+ex_b <- lobsters |>
+  filter(month == "8")
+
+ex_c <- lobsters |> 
+  filter(site == "AQUE" | size_mm > 70)
+
+ex_d <- lobsters |>
+  filter(site != 'NAPL')
+
+ex_e <- lobsters |>
+  group_by(site) |> 
+  summarize(mean_length = mean(size_mm, na.rm = TRUE),
+           sd_length = sd(size_mm, na.rm = TRUE))
+
+ex_f <- lobsters |>
+  group_by(site, month) |>
+  summarize(max_length = max(size_mm, na.rm = TRUE))
+           
+ex_g <- lobsters |>
+  mutate (carpace_length_cm = size_mm / 10)
+
+ex_h <- lobsters |>
+  clean_names()
+
+ex_i <- lobsters |>
+  mutate(area = as.character(area))
+
+ex_j <- lobsters |> 
+  mutate(
+    size_bin = case_when(size_mm <= 70 ~ "small",
+                         size_mm > 70 ~ "large"))
+ 
+# ex_k <- lobsters |> mutate(designation = if (site = "IVEE") {print (paste0("MPA"))} else if (site = "NAPL") {print(paste0("MPA"))})
+                          
+
 ```
 
